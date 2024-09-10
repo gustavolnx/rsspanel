@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['remove_word'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="./index2.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         function filterWords() {
             var input = document.getElementById('pesquisar_palavra');
@@ -62,61 +62,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['remove_word'])) {
         }
     </script>
 </head>
-<body>
-    <div class="container">
-        <div class="screen">
-            <div class="screen__content">
-                <h1 class="h1-bv">Bem-vindo, <?php echo htmlspecialchars($username); ?>!</h1>
-                <form class="login" method="post">
-                    <div class="login__field">
-                        <i class="login__icon fas fa-plus"></i>
-                        <input id="nova_palavra" type="text" class="login__input" name="new_word" placeholder="Bloquear nova palavra">
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+            <div class="flex justify-center mb-6">
+                <img src="nav-logo.png" alt="Logo" class="h-16">
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold mb-6 text-center">Bem-vindo, <?php echo htmlspecialchars($username); ?>!</h1>
+            <form method="post" class="space-y-4">
+                <div class="flex flex-col md:flex-row md:space-x-4">
+                    <div class="flex-1">
+                        <input id="nova_palavra" type="text" class="w-full px-4 py-2 border rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500" name="new_word" placeholder="Bloquear nova palavra">
                     </div>
-                    <button class="button login__submit" type="submit">
-                        <span class="button__text">Bloquear</span>
-                        <i class="button__icon fas fa-chevron-right"></i>
+                    <button class="mt-2 md:mt-0 w-full md:w-auto px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300" type="submit">
+                        Bloquear
                     </button>
+                </div>
 
-                    <div class="login__field">
-                        <i class="login__icon fas fa-minus"></i>
-                        <input id="palavra_remover" type="text" class="login__input" name="remove_word" placeholder="Remover palavra bloqueada">
+                <div class="flex flex-col md:flex-row md:space-x-4">
+                    <div class="flex-1">
+                        <input id="palavra_remover" type="text" class="w-full px-4 py-2 border rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500" name="remove_word" placeholder="Remover palavra bloqueada">
                     </div>
-                    <button class="button login__submit" type="submit">
-                        <span class="button__text">Remover</span>
-                        <i class="button__icon fas fa-chevron-right"></i>
+                    <button class="mt-2 md:mt-0 w-full md:w-auto px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300" type="submit">
+                        Remover
                     </button>
+                </div>
 
-                    <div class="filtro-palavras">
-                    <input class="pesquisar_p" type="text" id="pesquisar_palavra" onkeyup="filterWords()" placeholder="Buscar palavras bloqueadas">
-                <div class="container-palavras">
-  
-                    <ul id="blocked-words-list">
+                <div class="mt-6">
+                    <input class="w-full px-4 py-2 border rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500" type="text" id="pesquisar_palavra" onkeyup="filterWords()" placeholder="Buscar palavras bloqueadas">
+                </div>
+
+                <div class="mt-4 max-h-60 overflow-y-auto">
+                    <ul id="blocked-words-list" class="space-y-2">
                         <?php foreach ($data['default_words'] as $word): ?>
-                            <li><?php echo htmlspecialchars($word); ?></li>
+                            <li class="bg-gray-700 px-3 py-2 rounded-lg"><?php echo htmlspecialchars($word); ?></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
+            </form>
 
-                
-                </form>
-           
-
-                    </div>
-                    
-                    <button class="button login__submit" type="submit" onclick="location.href='./index.php'">
-                        <span class="button__text">Sair</span>
-                        <i class="button__icon fas fa-chevron-right"></i>
-                    </button>
-
-     
-             
-            </div>
-            <div class="screen__background">
-                <span class="screen__background__shape screen__background__shape4"></span>
-                <span class="screen__background__shape screen__background__shape3"></span>
-                <span class="screen__background__shape screen__background__shape2"></span>
-                <span class="screen__background__shape screen__background__shape1"></span>
-            </div>
+            <button class="mt-8 w-full px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition duration-300" onclick="location.href='./index.php'">
+                Sair
+            </button>
         </div>
     </div>
 </body>
