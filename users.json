@@ -1,0 +1,16 @@
+{
+    "users": [
+        {
+            "username": "Gustavo",
+            "password": "$2y$10$.MHuMSorA4\/Yb2VYKbWHSuf\/2uoRRwU7ufr2K.DT0A4DMCYMkJRJS"
+        },
+        {
+            "username": "Kanjiko",
+            "password": "$2y$10$zji2GPUpH7QzkaW7czRV4uoBqsfe9nZHT8hKtbcK20OXwZepBKBLq"
+        },
+        {
+            "username": "Diamond",
+            "password": "$2y$10$FalOvz4FRHZnV8.wsOhTpOEyLkKFVSVX3f9DAVE7CqkHx9WAfER7u"
+        }
+    ]
+}

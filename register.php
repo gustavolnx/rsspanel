@@ -1,34 +1,34 @@
 <?php
-try {
-    $db = new PDO('sqlite:new_users.sqlite');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['username'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-    $db->exec("CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL
-    )");
+    $users_file = 'users.json';
+    $users_data = json_decode(file_get_contents($users_file), true);
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $username = $_POST['username'];
-        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-        $stmt = $db->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password);
-        $stmt->execute();
-
-        // Assegurar que o diretório users_data existe
-        if (!file_exists('users_data')) {
-            mkdir('users_data', 0777, true);
+    // Verificar se o usuário já existe
+    foreach ($users_data['users'] as $user) {
+        if ($user['username'] === $username) {
+            echo "Erro: Nome de usuário já existe.";
+            exit;
         }
-
-        // Criar arquivo JSON para o novo usuário
-        file_put_contents("users_data/{$username}.json", json_encode(["blocked_words" => []]));
-
-        echo "Usuário registrado com sucesso!";
     }
-} catch (PDOException $e) {
-    echo "Erro: " . $e->getMessage();
+
+    // Adicionar novo usuário
+    $users_data['users'][] = [
+        'username' => $username,
+        'password' => $password
+    ];
+
+    // Salvar os dados atualizados
+    file_put_contents($users_file, json_encode($users_data, JSON_PRETTY_PRINT));
+
+    // Criar arquivo JSON para as palavras bloqueadas do novo usuário
+    if (!file_exists('users_data')) {
+        mkdir('users_data', 0777, true);
+    }
+    file_put_contents("users_data/{$username}.json", json_encode(["blocked_words" => []]));
+
+    echo "Usuário registrado com sucesso!";
 }
 ?>
